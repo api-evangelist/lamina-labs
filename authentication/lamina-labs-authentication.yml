@@ -1,0 +1,43 @@
+generated: '2026-07-19'
+method: searched
+source: https://api.laminalabs.ai/.well-known/oauth-authorization-server
+docs: https://app.laminalabs.ai/simi
+summary:
+  types: [oauth2]
+  oauth2_flows: [authorizationCode]
+  refresh: true
+  pkce_required_methods: [S256]
+  dynamic_client_registration: true
+  public_clients_supported: true
+schemes:
+- name: LaminaOAuth
+  type: oauth2
+  sources: [well-known/lamina-labs-oauth-authorization-server.json, well-known/lamina-labs-openid-configuration.json]
+  issuer: https://api.laminalabs.ai
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.laminalabs.ai/oauth/authorize
+    tokenUrl: https://api.laminalabs.ai/oauth/token
+    registrationUrl: https://api.laminalabs.ai/oauth/register
+    scopes:
+      jobs:create: Submit Simi video generation jobs.
+      jobs:read: Read Simi video job status and retrieve playback/download URLs.
+  response_types_supported: [code]
+  grant_types_supported: [authorization_code, refresh_token]
+  code_challenge_methods_supported: [S256]
+  token_endpoint_auth_methods_supported: [none, client_secret_post, client_secret_basic]
+transport:
+  header: Authorization
+  scheme: Bearer
+  observed_unauthenticated_response:
+    status: 401
+    body: '{"error":{"code":"UNAUTHORIZED","message":"Missing credentials"}}'
+notes:
+- Support for the `none` token endpoint auth method plus mandatory PKCE (S256) and an
+  open dynamic client registration endpoint is the MCP remote-server authorization
+  profile, letting an agent register itself as a public client without a pre-issued
+  client secret.
+- No API-key scheme was observed; every unauthenticated request to the API host returns
+  the same UNAUTHORIZED envelope.
+- The MCP `initialize` and `tools/list` methods answer without credentials; tool
+  invocation requires a bearer token.
