@@ -1,0 +1,29 @@
+generated: '2026-07-19'
+method: searched
+source: https://api.laminalabs.ai/.well-known/oauth-authorization-server
+docs: https://app.laminalabs.ai/simi
+schemes:
+- name: LaminaOAuth
+  source: well-known/lamina-labs-oauth-authorization-server.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.laminalabs.ai/oauth/authorize
+    tokenUrl: https://api.laminalabs.ai/oauth/token
+scopes:
+- scope: jobs:create
+  description: Submit Simi video generation jobs.
+  flows: [authorizationCode]
+  sources: [well-known/lamina-labs-oauth-authorization-server.json]
+  mcp_tools: [simi_submit_video]
+  action_class: write
+- scope: jobs:read
+  description: Read Simi video job status and retrieve playback/download URLs.
+  flows: [authorizationCode]
+  sources: [well-known/lamina-labs-oauth-authorization-server.json]
+  mcp_tools: [simi_get_video]
+  action_class: read
+notes:
+- The scope surface is small and cleanly split read/write, which maps one-to-one onto
+  the two published MCP tools.
+- Scopes are advertised in `scopes_supported` on both discovery documents; no separate
+  scopes reference page is published.

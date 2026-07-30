@@ -1,0 +1,86 @@
+generated: '2026-07-19'
+method: searched
+source: https://api.laminalabs.ai/mcp
+status: published
+server:
+  name: lamina-simi
+  title: Lamina Simi MCP Server
+  version: 0.1.0
+  transport: http
+  url: https://api.laminalabs.ai/mcp
+  protocol_version: '2025-06-18'
+  instructions: Use simi_submit_video to submit a Simi video generation job. Then call
+    simi_get_video with the returned job_id to check readiness and retrieve playback/download
+    URLs when available.
+capabilities:
+  tools:
+    listChanged: false
+  resources: false
+  prompts: false
+  notes: resources/list and prompts/list both return JSON-RPC -32601 "Unsupported MCP
+    method"; this server exposes tools only.
+authorization:
+  model: oauth2
+  discovery:
+  - https://api.laminalabs.ai/.well-known/oauth-authorization-server
+  - https://api.laminalabs.ai/.well-known/openid-configuration
+  authorization_endpoint: https://api.laminalabs.ai/oauth/authorize
+  token_endpoint: https://api.laminalabs.ai/oauth/token
+  registration_endpoint: https://api.laminalabs.ai/oauth/register
+  dynamic_client_registration: true
+  pkce: [S256]
+  scopes: [jobs:create, jobs:read]
+  note: tools/list and initialize answer unauthenticated; tool invocation requires a
+    bearer token.
+tools:
+- name: simi_submit_video
+  title: Submit Simi Video
+  description: Submit a Simi video generation job. This returns immediately with job
+    metadata; it does not stream progress.
+  scope: jobs:create
+  input:
+    required: [prompt]
+    properties:
+      prompt: {type: string, minLength: 1, maxLength: 10000, description: The user-facing
+          video prompt.}
+      duration_seconds: {type: integer, minimum: 1, maximum: 300, default: 60, description: Requested
+          video duration in seconds.}
+      aspect_ratio: {type: string, default: '16:9', description: 'Video aspect ratio,
+          for example 16:9, 9:16, or 1:1.'}
+      language: {type: string, default: English, description: Output language for the
+          generated video.}
+  output:
+    required: [job]
+    properties:
+      job: {type: object, description: Public Lamina job metadata.}
+  annotations:
+    destructiveHint: false
+    idempotentHint: false
+    openWorldHint: true
+- name: simi_get_video
+  title: Get Simi Video
+  description: Check a Simi video job and return playback/download URLs when the video
+    is ready.
+  scope: jobs:read
+  input:
+    required: [job_id]
+    properties:
+      job_id: {type: string, minLength: 1, description: The Lamina job id returned by
+          simi_submit_video.}
+  output:
+    required: [job, playback, app_url, ready]
+    properties:
+      job: {type: object, description: Public Lamina job metadata.}
+      playback: {type: object, description: Playback status and signed media URLs.}
+      app_url: {type: string}
+      video_url: {type: [string, 'null']}
+      download_url: {type: [string, 'null']}
+      ready: {type: boolean}
+  annotations:
+    readOnlyHint: true
+    destructiveHint: false
+    idempotentHint: true
+    openWorldHint: true
+rate_limits:
+  observed: 120 requests per 60 second window
+  headers: [x-ratelimit-limit, x-ratelimit-remaining, x-ratelimit-reset]

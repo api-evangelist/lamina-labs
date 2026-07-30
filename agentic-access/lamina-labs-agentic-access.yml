@@ -1,0 +1,51 @@
+generated: '2026-07-19'
+method: generated
+source: mcp/lamina-labs-mcp.yml
+model: x-agentic-access (Curity Access Intelligence vocabulary)
+disclaimer: A governance starting point derived from the provider's published MCP tool
+  annotations and OAuth scopes, not an authoritative provider claim. `audience` is left
+  null to bind per deployment.
+summary:
+  operations: 2
+  by_action_class: {connected: 1, acting: 1}
+  by_consequence: {read: 1, write: 1}
+  human_in_the_loop: 0
+  audit_required: 1
+operations:
+- operation: simi_get_video
+  surface: mcp
+  scope: jobs:read
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    scope: jobs:read
+    audience: null
+    token: {max-ttl: 3600}
+    audit: optional
+    human-in-the-loop: not-required
+  rationale: Provider annotates this tool readOnlyHint true, idempotentHint true,
+    destructiveHint false. It returns signed media URLs, so the response is sensitive
+    even though the call is read-only.
+- operation: simi_submit_video
+  surface: mcp
+  scope: jobs:create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    scope: jobs:create
+    audience: null
+    token: {max-ttl: 900}
+    audit: required
+    human-in-the-loop: not-required
+  rationale: Creates a billable video generation job. Provider annotates idempotentHint
+    false, so a retry produces a second job; a governing agent should de-duplicate and
+    treat repeat submission as a cost event.
+  cautions:
+  - No idempotency key exists, so at-least-once agent retry semantics will double-charge
+    and double-generate.
+  - openWorldHint is true on both tools; outputs are model-generated video and should not
+    be treated as authoritative content.
+notes:
+- The provider's authorization server supports dynamic client registration with the
+  `none` token endpoint auth method, so an agent can self-register as a public client.
+  Deployments should constrain which agents may complete that flow.

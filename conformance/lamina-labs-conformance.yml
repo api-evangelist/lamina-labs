@@ -1,0 +1,50 @@
+generated: '2026-07-19'
+method: probed
+source: https://api.laminalabs.ai/
+standards:
+- id: oauth2
+  conforms: true
+  evidence: Authorization server advertises authorization_code and refresh_token grants
+    with authorize/token endpoints.
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: /.well-known/oauth-authorization-server returns 200 with a complete metadata
+    document.
+- id: rfc7636-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported is ["S256"].
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint https://api.laminalabs.ai/oauth/register is advertised.
+- id: openid-connect-discovery
+  conforms: partial
+  evidence: /.well-known/openid-configuration returns 200, but the document is identical
+    to the OAuth 2.0 AS metadata and declares no id_token support, jwks_uri, subject
+    types, or signing algorithms; it is OAuth metadata served at the OIDC path rather
+    than a conforming OIDC provider.
+- id: mcp-2025-06-18
+  conforms: true
+  evidence: initialize negotiates protocolVersion 2025-06-18 and advertises a tools
+    capability; tools/list returns two fully schema'd tools.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors use a custom {"error":{"code","message"}} envelope with content-type
+    application/json, not application/problem+json.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: No /.well-known/security.txt on either the API host or the website.
+- id: rfc9727-api-catalog
+  conforms: false
+  evidence: No /.well-known/api-catalog document is published.
+- id: openapi
+  conforms: false
+  evidence: No OpenAPI or Swagger document is published; the machine-readable contract
+    is the MCP tool schema surface.
+- id: hsts
+  conforms: true
+  evidence: 'strict-transport-security: max-age=31536000; includeSubDomains on the API
+    host.'
+compliance_program:
+  published: false
+  note: No trust center, SOC 2, ISO 27001, or other certification claim was found. No
+    `Compliance` pointer is emitted.

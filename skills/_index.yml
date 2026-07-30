@@ -1,0 +1,13 @@
+generated: '2026-07-19'
+method: generated
+source: mcp/lamina-labs-mcp.yml
+grounding: Every step references a tool name, parameter, constraint, annotation, error
+  code, or rate limit verified live against https://api.laminalabs.ai/mcp. Lamina
+  publishes no OpenAPI; the MCP tool schemas are the machine-readable contract.
+skills:
+- file: lamina-labs-generate-explainer-video.md
+  name: Generate a Simi explainer video
+  api: mcp/lamina-labs-mcp.yml
+  transport: mcp
+  operations: [simi_submit_video, simi_get_video]
+  scopes: [jobs:create, jobs:read]

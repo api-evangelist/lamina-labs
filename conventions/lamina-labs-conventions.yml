@@ -1,0 +1,58 @@
+generated: '2026-07-19'
+method: probed
+source: https://api.laminalabs.ai/
+authentication:
+  style: oauth2 bearer token
+  header: 'Authorization: Bearer <token>'
+  detail: authentication/lamina-labs-authentication.yml
+  scopes: scopes/lamina-labs-scopes.yml
+async_model:
+  style: submit-then-poll
+  submit: simi_submit_video returns immediately with job metadata
+  poll: simi_get_video with the returned job_id until `ready` is true
+  streaming: false
+  streaming_note: The server's own tool description states it "does not stream progress".
+  callbacks: none published
+idempotency:
+  supported: false
+  key_header: null
+  evidence: No idempotency key header or parameter is documented or present in the MCP
+    tool input schemas; simi_submit_video carries annotation idempotentHint false, while
+    the read tool simi_get_video carries idempotentHint true.
+  consequence: A retried submission is expected to create a second video generation job;
+    clients must de-duplicate on their own side.
+pagination:
+  supported: false
+  evidence: No list operation is exposed; the tool surface is submit-one and get-one.
+error_envelope:
+  format: custom-envelope
+  shape: '{"error":{"code":"...","message":"...","details":{...}}}'
+  detail: errors/lamina-labs-error-codes.yml
+  rfc9457: false
+rate_limiting:
+  headers: [x-ratelimit-limit, x-ratelimit-remaining, x-ratelimit-reset]
+  detail: rate-limits/lamina-labs-rate-limits.yml
+request_tracing:
+  request_id_header: none observed
+  note: The edge (Vercel) sets x-vercel-id on the website and app hosts, but the API host
+    (nginx) returns no correlation identifier.
+versioning:
+  api_version_scheme: none observed
+  detail: The API host exposes no version path segment or version header; the MCP server
+    reports serverInfo.version 0.1.0 and protocolVersion 2025-06-18.
+  detail_ref: lifecycle/lamina-labs-lifecycle.yml
+media_types:
+  request: application/json
+  response: application/json; charset=utf-8
+security_headers:
+  strict_transport_security: max-age=31536000; includeSubDomains
+  x_content_type_options: nosniff
+  x_frame_options: DENY
+  referrer_policy: no-referrer
+  permissions_policy: camera=(), microphone=(), geolocation=()
+  cross_origin_resource_policy: same-site
+  x_permitted_cross_domain_policies: none
+  note: The API host ships an unusually complete security header set for a seed-stage API.
+notes:
+- These conventions are observed from live probing, not from published developer
+  documentation; Lamina Labs publishes no API reference at this time.

@@ -1,0 +1,51 @@
+generated: '2026-07-19'
+method: probed
+source: https://api.laminalabs.ai/
+format: custom-envelope
+rfc9457: false
+envelope:
+  content_type: application/json; charset=utf-8
+  shape: '{"error":{"code":"<SCREAMING_SNAKE_CODE>","message":"<human message>","details":{...}}}'
+  fields:
+  - {name: error.code, type: string, description: Stable machine-readable error code.}
+  - {name: error.message, type: string, description: Human-readable message.}
+  - {name: error.details, type: object, required: false, description: 'Present on validation
+      failures; carries Zod-style formErrors[] and fieldErrors{} maps.'}
+errors:
+- code: UNAUTHORIZED
+  status: 401
+  message: Missing credentials
+  cause: No bearer token presented, or the token is not valid for the requested resource.
+  remediation: Complete the OAuth authorization-code + PKCE flow and send the access
+    token in the Authorization header.
+  observed_at: GET https://api.laminalabs.ai/
+- code: VALIDATION_ERROR
+  status: 400
+  message: Request validation failed
+  cause: One or more request parameters failed schema validation.
+  remediation: Read error.details.fieldErrors for the per-field messages and correct the
+    request.
+  observed_at: GET https://api.laminalabs.ai/oauth/authorize
+  example_details:
+    formErrors: []
+    fieldErrors:
+      response_type: ['Invalid input: expected "code"']
+      client_id: ['Invalid input: expected string, received undefined']
+- code: NOT_FOUND
+  status: 404
+  message: Not found
+  cause: Unknown path, or an unsupported method on a known path.
+  remediation: Check the path; note that unsupported methods also return NOT_FOUND rather
+    than 405.
+  observed_at: GET https://api.laminalabs.ai/mcp/<unknown>, DELETE https://api.laminalabs.ai/mcp
+jsonrpc_errors:
+- code: -32601
+  message: 'Unsupported MCP method: <method>'
+  cause: The MCP server implements tools only; resources/* and prompts/* are not supported.
+  transport: JSON-RPC over the /mcp endpoint
+notes:
+- This catalog is derived from live probes of unauthenticated and malformed requests, not
+  from a published error reference; Lamina publishes no error-code documentation.
+- The envelope is consistent across HTTP status codes, which makes client-side error
+  handling straightforward, but it is not RFC 9457 application/problem+json.
+- Unsupported HTTP methods collapse to NOT_FOUND instead of 405 Method Not Allowed.

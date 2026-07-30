@@ -1,0 +1,23 @@
+generated: '2026-07-19'
+method: probed
+source: https://api.laminalabs.ai/mcp
+signaling:
+  style: x-ratelimit headers
+  headers:
+  - {name: x-ratelimit-limit, description: Requests permitted in the current window.}
+  - {name: x-ratelimit-remaining, description: Requests remaining in the current window.}
+  - {name: x-ratelimit-reset, description: Seconds until the current window resets.}
+  retry_after: false
+  draft_ratelimit_headers: false
+rate_limits:
+- name: MCP endpoint
+  scope: per client
+  endpoint: https://api.laminalabs.ai/mcp
+  limit_count: 120
+  interval: 60
+  interval_unit: seconds
+  observed: 'x-ratelimit-limit: 120, x-ratelimit-reset: 60'
+notes:
+- Observed on unauthenticated GET and POST to /mcp; authenticated and per-plan limits are
+  not published.
+- No Retry-After header was observed and no published rate-limit documentation exists.

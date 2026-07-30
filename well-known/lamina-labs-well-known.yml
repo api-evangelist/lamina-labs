@@ -1,0 +1,39 @@
+generated: '2026-07-19'
+method: searched
+source: https://api.laminalabs.ai/.well-known/
+hosts:
+- host: https://api.laminalabs.ai
+  documents:
+  - path: /.well-known/openid-configuration
+    standard: OpenID Connect Discovery 1.0
+    status: 200
+    file: lamina-labs-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    standard: RFC 8414 OAuth 2.0 Authorization Server Metadata
+    status: 200
+    file: lamina-labs-oauth-authorization-server.json
+  - path: /.well-known/security.txt
+    standard: RFC 9116
+    status: 401
+    note: API host requires credentials on all unmatched paths; no security.txt published.
+  - path: /.well-known/api-catalog
+    standard: RFC 9727
+    status: 401
+  - path: /.well-known/ai-plugin.json
+    status: 401
+- host: https://laminalabs.ai
+  documents:
+  - path: /.well-known/security.txt
+    standard: RFC 9116
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+notes:
+- The two authorization-metadata documents are byte-identical, which is the OAuth 2.1
+  / MCP pattern of serving RFC 8414 metadata at both discovery paths.
+- No security.txt is published on either host.
+probed: '2026-07-19'

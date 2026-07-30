@@ -1,0 +1,29 @@
+generated: '2026-07-19'
+method: probed
+source: https://api.laminalabs.ai/mcp
+versioning:
+  scheme: none
+  current: null
+  note: No version path segment or version header is exposed on the API host.
+  mcp_server_version: 0.1.0
+  mcp_protocol_version: '2025-06-18'
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: No deprecation or sunset policy is published; no Deprecation pointer is emitted.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  probed: [status.laminalabs.ai, laminalabs.ai/status]
+  note: No status page was found; no StatusPage pointer is emitted.
+changelog:
+  url: null
+  note: No dated changelog is published.
+maturity:
+  stage: early
+  evidence: MCP server reports version 0.1.0; company is Y Combinator Spring 2026; the
+    marketing site carries no developer documentation, pricing page, or legal pages.
+deprecated_operations: []

@@ -1,0 +1,47 @@
+generated: '2026-07-19'
+method: derived
+source: mcp/lamina-labs-mcp.yml
+note: Derived from the published MCP tool input/output schemas. Lamina publishes no
+  OpenAPI and no object reference, so entity fields below are only those the tool
+  schemas actually name; the `job` and `playback` objects are declared as free-form
+  objects by the server and their internal fields are not published.
+entities:
+- name: Job
+  description: A Simi video generation job, created by submission and polled until ready.
+  id_field: job_id
+  id_type: string
+  created_by: simi_submit_video
+  read_by: simi_get_video
+  known_fields:
+  - {name: job_id, type: string, source: simi_get_video input, description: Identifier
+      returned by submission.}
+  - {name: prompt, type: string, max_length: 10000, source: simi_submit_video input}
+  - {name: duration_seconds, type: integer, min: 1, max: 300, default: 60, source: simi_submit_video
+      input}
+  - {name: aspect_ratio, type: string, default: '16:9', source: simi_submit_video input}
+  - {name: language, type: string, default: English, source: simi_submit_video input}
+  - {name: ready, type: boolean, source: simi_get_video output}
+  - {name: app_url, type: string, source: simi_get_video output}
+  opaque: true
+  opaque_note: The `job` object itself is typed only as "Public Lamina job metadata".
+- name: Playback
+  description: Playback status and signed media URLs for a completed job.
+  read_by: simi_get_video
+  known_fields:
+  - {name: video_url, type: [string, 'null'], source: simi_get_video output}
+  - {name: download_url, type: [string, 'null'], source: simi_get_video output}
+  opaque: true
+  opaque_note: The `playback` object is typed only as "Playback status and signed media
+    URLs".
+relationships:
+- from: Job
+  to: Playback
+  kind: has_one
+  via: job_id
+  description: A job resolves to one playback record once `ready` is true; the media
+    URLs are null until then.
+lifecycle:
+  states_observed: [submitted, ready]
+  signal: The boolean `ready` field on the simi_get_video output.
+  note: No enumerated status vocabulary (e.g. queued/processing/failed) is published;
+    failure states are not documented.

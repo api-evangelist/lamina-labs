@@ -1,0 +1,27 @@
+generated: '2026-07-19'
+method: searched
+source: npm registry search, PyPI, GitHub
+packages: []
+result: none-found
+registries_checked:
+- {registry: npm, queries: [lamina simi, laminalabs], result: no first-party package}
+- {registry: pypi, names: [lamina-labs, laminalabs, simi-sdk], result: 404}
+- {registry: github, orgs: [lamina-labs, laminalabs, lamina-ai], result: no org found}
+rejected_candidates:
+- name: lamina
+  registry: npm
+  reason: A layer-based shader material library for ThreeJS; unrelated to Lamina Labs.
+- name: '@uselamina/cli'
+  registry: npm
+  reason: Published under the unrelated "uselamina" namespace; no link to laminalabs.ai
+    or the Simi product was established, so it is not marked official.
+- name: simi
+  registry: pypi
+  reason: Name collision only; no association with Lamina Labs established.
+- name: '@siktec-lab/simi-flow'
+  registry: npm
+  reason: A text-similarity engine from an unrelated publisher.
+notes:
+- Lamina Labs ships no first-party client SDK. Its supported integration path is the
+  remote MCP server at https://api.laminalabs.ai/mcp, consumed by any MCP client.
+- No `SDKs` pointer is emitted because no official client library exists.
