@@ -1,22 +1,123 @@
 aid: lamina-labs
 name: Lamina Labs
-description: Lamina Labs is a company surfaced as a portfolio company of y-combinator and added to the
-  API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: 'Lamina Labs is a San Francisco company (Y Combinator Spring 2026) building
+  near-real-time video infrastructure for large language models. Its flagship product,
+  Simi, turns prompts, documents, and AI-generated answers into whiteboard-style teaching
+  videos in seconds, handling script writing, illustration, animation, and narration
+  automatically, for durations from one minute to an hour and in over 80 languages.
+  The company targets training, onboarding, product walkthroughs, sales, marketing,
+  and educational use cases, with the stated goal of making video the default interface
+  for AI communication. Lamina exposes Simi to agents through a public remote MCP server
+  at https://api.laminalabs.ai/mcp, secured by an OAuth 2.1-style authorization server
+  with PKCE, dynamic client registration, and job-scoped access tokens.'
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.laminalabs.ai/logo.png
 url: https://raw.githubusercontent.com/api-evangelist/lamina-labs/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - y-combinator
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-batch: Spring 2026
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-apis: []
+- Artificial Intelligence
+- Video
+- Video Generation
+- Machine Learning
+- Education
+- Media
+- Model Context Protocol
+- Content Generation
+apis:
+- aid: lamina-labs:simi
+  name: Simi Video Generation API
+  description: 'The Simi API submits and retrieves whiteboard-style explainer video
+    generation jobs. Submission is asynchronous: a job is created and returns immediately
+    with job metadata, then the job is polled until playback and download URLs are
+    available. The surface is published to agents as a remote Model Context Protocol
+    server, authorized by OAuth with the jobs:create and jobs:read scopes.'
+  humanURL: https://app.laminalabs.ai/simi
+  baseURL: https://api.laminalabs.ai
+  tags:
+  - Video Generation
+  - Artificial Intelligence
+  - Model Context Protocol
+  - Jobs
+  properties:
+  - type: MCPServer
+    url: mcp/lamina-labs-mcp.yml
+  - type: Authentication
+    url: authentication/lamina-labs-authentication.yml
+  - type: OAuthScopes
+    url: scopes/lamina-labs-scopes.yml
+  - type: ErrorCatalog
+    url: errors/lamina-labs-error-codes.yml
+  - type: RateLimits
+    url: rate-limits/lamina-labs-rate-limits.yml
+  - type: Conventions
+    url: conventions/lamina-labs-conventions.yml
+  - type: DataModel
+    url: data-model/lamina-labs-data-model.yml
+common:
+- type: DomainSecurity
+  url: security/lamina-labs-domain-security.yml
+- type: Website
+  url: https://www.laminalabs.ai/
+- type: Documentation
+  url: https://app.laminalabs.ai/simi
+- type: SignUp
+  url: https://app.laminalabs.ai/simi
+- type: Support
+  url: https://lamina-labs.cal.com/lamina
+- type: MCPServer
+  url: mcp/lamina-labs-mcp.yml
+- type: Authentication
+  url: authentication/lamina-labs-authentication.yml
+- type: OAuthScopes
+  url: scopes/lamina-labs-scopes.yml
+- type: WellKnown
+  url: well-known/lamina-labs-well-known.yml
+- type: ErrorCatalog
+  url: errors/lamina-labs-error-codes.yml
+- type: RateLimits
+  url: rate-limits/lamina-labs-rate-limits.yml
+- type: Conventions
+  url: conventions/lamina-labs-conventions.yml
+- type: Conformance
+  url: conformance/lamina-labs-conformance.yml
+- type: Lifecycle
+  url: lifecycle/lamina-labs-lifecycle.yml
+- type: DataModel
+  url: data-model/lamina-labs-data-model.yml
+- type: Packages
+  url: packages/lamina-labs-packages.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/lamina-labs-agentic-access.yml
+- type: LLMsTxt
+  url: llms/lamina-labs-llms.txt
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
