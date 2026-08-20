@@ -37,6 +37,16 @@ tags:
 - Artificial Intelligence
 - Video
 - Video Generation
+- Machine-Learning
+- Education
+- Media
+- MCP
+- Content Generation
+tags_raw:
+- Company
+- Artificial Intelligence
+- Video
+- Video Generation
 - Machine Learning
 - Education
 - Media
@@ -53,6 +63,11 @@ apis:
   humanURL: https://app.laminalabs.ai/simi
   baseURL: https://api.laminalabs.ai
   tags:
+  - Video Generation
+  - Artificial Intelligence
+  - MCP
+  - Job
+  tags_raw:
   - Video Generation
   - Artificial Intelligence
   - Model Context Protocol
