@@ -10,6 +10,17 @@ description: 'Lamina Labs is a San Francisco company (Y Combinator Spring 2026) 
   for AI communication. Lamina exposes Simi to agents through a public remote MCP server
   at https://api.laminalabs.ai/mcp, secured by an OAuth 2.1-style authorization server
   with PKCE, dynamic client registration, and job-scoped access tokens.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
