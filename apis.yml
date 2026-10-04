@@ -48,7 +48,7 @@ tags:
 - Artificial Intelligence
 - Video
 - Video Generation
-- Machine-Learning
+- Machine Learning
 - Education
 - Media
 - MCP
@@ -63,6 +63,7 @@ tags_raw:
 - Media
 - Model Context Protocol
 - Content Generation
+- Machine-Learning
 apis:
 - aid: lamina-labs:simi
   name: Simi Video Generation API
