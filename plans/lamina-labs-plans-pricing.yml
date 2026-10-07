@@ -1,0 +1,49 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://www.laminalabs.ai/
+sources:
+- https://www.laminalabs.ai/
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T112025
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: tiered-subscription
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-07'
+published: true
+note: Marketing homepage with plan tiers; 1 credit ≈ 1 second of balanced-quality video; annual billing
+  saves 40%. Student discounts mentioned without prices.
+plan_count: 4
+currency: USD
+plans:
+- name: Plus
+  price_text: $19.99 /month
+  price: 19.99
+  currency: USD
+  period: month
+  unit: credits
+  included_quota: 6,000 credits
+- name: Pro
+  price_text: $49.99 /month
+  price: 49.99
+  currency: USD
+  period: month
+  unit: credits
+  included_quota: 18,000 credits
+- name: Max
+  price_text: $99.99 /month
+  price: 99.99
+  currency: USD
+  period: month
+  unit: credits
+  included_quota: 45,000 credits
+- name: Business
+  price_text: Talk to us
+  period: none
+  included_quota: branding, custom voice, API, volume pricing, longer videos and higher limits
+rate_limit_statements:
+- Most plans make videos up to about five minutes; longer runtimes are set up through a Business plan.
