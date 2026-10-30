@@ -64,40 +64,120 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Lamina Labs is a San Francisco company (Y Combinator, Spring 2026) building near-real-time
-video infrastructure for large language models. Its product **Simi** turns prompts,
-documents, and AI-generated answers into whiteboard-style teaching videos in seconds —
-handling script writing, illustration, animation, and narration automatically, in over 80
-languages — for training, onboarding, product walkthroughs, sales, marketing, and
-education.
+Lamina Labs is a San Francisco company (Y Combinator Spring 2026) building near-real-time video infrastructure for large language models. Its flagship product, Simi, turns prompts, documents, and AI-generated answers into whiteboard-style teaching videos in seconds, handling script writing, illustration, animation, and narration automatically, for durations from one minute to an hour and in over 80 languages. The company targets training, onboarding, product walkthroughs, sales, marketing, and educational use cases, with the stated goal of making video the default interface for AI communication. Lamina exposes Simi to agents through a public remote MCP server at https://api.laminalabs.ai/mcp, secured by an OAuth 2.1-style authorization server with PKCE, dynamic client registration, and job-scoped access tokens.
 
-- Website: https://www.laminalabs.ai/
-- Simi app: https://app.laminalabs.ai/simi
+**Areas:** Company · Artificial Intelligence · Video · Video Generation · Machine Learning · Education · Media · MCP · Content Generation
 
-## Developer surface
+## Lamina Labs on APIs.io
 
-Lamina Labs publishes **no OpenAPI, no API reference, and no SDKs**. Its machine-readable
-contract is a **public remote MCP server**:
+Everything profiled for Lamina Labs is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/lamina-labs/](https://apis.io/providers/lamina-labs/)** — or go straight to one of the APIs or properties below.
 
-- `https://api.laminalabs.ai/mcp` — server `lamina-simi` v0.1.0, MCP protocol 2025-06-18
-- Two tools: `simi_submit_video` (submit, `jobs:create`) and `simi_get_video` (poll,
-  `jobs:read`)
-- Tools only — `resources/list` and `prompts/list` return "Unsupported MCP method"
+### APIs (1)
 
-Authorization is an OAuth 2.1-shaped server with RFC 8414 metadata, mandatory PKCE
-(S256), refresh tokens, public-client support, and **dynamic client registration** — the
-MCP remote-server authorization profile, which lets an agent register itself.
+- [Simi Video Generation API](https://apis.io/apis/lamina-labs/simi/) — The Simi API submits and retrieves whiteboard-style explainer video generation jobs. Submission is asynchronous: a job is created and returns immediately…
 
-## Artifacts
+### Published properties
 
-| Artifact | Method |
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [Lamina Simi MCP Server](https://apis.io/servers/lamina-labs/lamina-simi/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Lamina Labs Agentic Access](https://apis.io/agentic-access/lamina-labs/lamina-labs-agentic-access/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Lamina Labs Authentication](https://apis.io/security/lamina-labs/lamina-labs-authentication/)
+- [Lamina Labs Domain Security](https://apis.io/security/lamina-labs/lamina-labs-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Lamina Labs Scopes](https://apis.io/scopes/lamina-labs/lamina-labs-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Lamina Labs Plans Pricing](https://apis.io/plans/lamina-labs/lamina-labs-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Lamina Labs Rate Limits](https://apis.io/rate-limits/lamina-labs/lamina-labs-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.laminalabs.ai/)
+- [Documentation](https://app.laminalabs.ai/simi)
+- [Pricing](https://www.laminalabs.ai/)
+- [Sign up](https://app.laminalabs.ai/simi)
+- [Support](https://lamina-labs.cal.com/lamina)
+
+## API Evangelist rating
+
+**Kin Score 25.5** — emerging · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
 |---|---|
-| `mcp/` | searched — live tool schemas |
-| `well-known/` | searched — OIDC + RFC 8414 metadata (both 200) |
-| `authentication/`, `scopes/` | searched — from authorization server metadata |
-| `errors/`, `rate-limits/`, `conventions/`, `conformance/`, `lifecycle/` | probed |
-| `security/domain-security` | probed |
-| `data-model/`, `agentic-access/`, `skills/`, `llms/` | derived / generated |
-| `packages/` | searched — no first-party SDK exists |
+| Discoverability | 75.0 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 18.5 |
+| Access clarity | 42.1 |
 
-Backed by: y-combinator
+**Agent readiness 31.8** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 24.5** — Education & Research
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/lamina-labs/](https://apis.io/providers/lamina-labs/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Lamina Labs: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/lamina-labs/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
